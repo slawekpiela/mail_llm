@@ -277,3 +277,4 @@ tags
 
 .idea/
 secrets.toml
+.DS_Store
