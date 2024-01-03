@@ -104,8 +104,8 @@ def fetch_mail_content_and_sender():
                     }
 
                     email_to_file = f'{imap_folder_name},"\n",{email_info["id"]},"\n"," ", {message_id},"\n",{sender},"\n",{recipient},"\n",{subject},"\n",{content}'
-                    with open("/Users/slawekpiela/pycharmprojects/mail_llm/mail_log.txt", 'a') as file: file.write(email_to_file + "\n")
-                    with open("/Users/slawekpiela/pycharmprojects/mail_llm/mail_log_IDs.txt", 'a') as file: file.write(message_id + "\n")
+                    with open("/Users/slawekpiela/pycharmprojects/mail_log.txt", 'a') as file: file.write(email_to_file + "\n")
+                    with open("/Users/slawekpiela/pycharmprojects/mail_log_IDs.txt", 'a') as file: file.write(message_id + "\n")
                     emails.append(email_info)
                     #print(f'Folder: {imap_folder_name}, Email ID: {email_id.decode()}, Sender: {sender}, Recipient: {recipient}, Subject: {subject}')
                     count += 1

@@ -2,7 +2,10 @@ import streamlit as st
 
 def main():exit()
 options_list = ["Inspekcje", "Incydenty", "Mobilne", "Osoby"] # clases of answers
-st.title("Zbieranie danych do KOIOS")
+st.title("Zbieranie danych do KOIOS v.1.1")
+if 'input1' not in st.session_state:
+        st.session_state.input1=''
+
 
 # Create two text input boxes
 input1 = st.text_input("Pytanie:")
@@ -15,10 +18,13 @@ print(data_to_save)
 # Create a button that when clicked, shows a message with the input values
 if st.button('Zapisz'):
     if input1 and input2:
-        with open('output.txt', 'w') as file:
+        with open('/Users/slawekpiela/output.txt', 'a') as file:
             file.write(data_to_save)
-            st.success('Data successfully saved to "output.txt"')
+
             print(data_to_save)
+
+
+
     else:
         st.warning("Wypełnij wszytkie pola")
 if __name__ == "__main__":
