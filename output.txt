@@ -1,1 +1,5 @@
-12,122,Inspekcje22,222,Inspekcje
+12,122,Inspekcje22,222,Inspekcjelocal1,local1,Inspekcjelocal2,local1,Inspekcje,
+local2,local1,Inspekcje,
+local3,local1,Inspekcje,
+local4,local1,Inspekcje,
+rola1,we,Inspekcje,
