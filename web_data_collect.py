@@ -18,7 +18,7 @@ print(data_to_save)
 # Create a button that when clicked, shows a message with the input values
 if st.button('Zapisz'):
     if input1 and input2:
-        with open('/Users/slawekpiela/output.txt', 'a') as file:
+        with open('/Users/slawekpiela/PycharmProjects/mail_llm/output.txt', 'a') as file:
             file.write(data_to_save)
 
             print(data_to_save)
