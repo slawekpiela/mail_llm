@@ -50,6 +50,21 @@ if st.button("Zapisz"):
     else:
         st.warning("Wypełnij wszytkie pola")
 
+if st.button("Pokaż wszystkie pytania"):
+
+    response=requests.get(url2,headers=headers)
+    data3= json.loads(response.text)
+    for record in data3['records']:
+        print(record['fields'])
+
+        # url3=url2+"/rec1"
+        # response2 = requests.get(url3, headers=headers, data=json.dumps(data))  # push to airtable
+        # if response.status_code == 200:
+        #    print("all",response2)
+        # else:
+        #     print("Airtable post error")
+
+
 
 def main():
     exit()
