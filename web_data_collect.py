@@ -1,4 +1,24 @@
 import streamlit as st
+import requests
+from configuration import airtable_token, base_id, table_id
+
+air_t = airtable_token
+b_id = base_id
+t_id = table_id
+
+url2 = 'https://api.airtable.com/v0/{}/{}'.format(b_id, t_id)
+print(url2)
+headers = {
+    'Authorization': 'Bearer ' + str(air_t),
+    'Content-Type': 'application/json',
+}
+
+response = requests.get(url2, headers=headers)
+print("resp:", response)
+if response.status_code == 200:
+    print("OK")
+else:
+    print("nok")
 
 def main():exit()
 options_list = ["Inspekcje", "Incydenty", "Mobilne", "Osoby"] # clases of answers
@@ -18,7 +38,7 @@ print(data_to_save)
 # Create a button that when clicked, shows a message with the input values
 if st.button('Zapisz'):
     if input1 and input2:
-        with open('/mount/src/mail_llm/output.txt', 'a') as file:
+        with open('output.txt', 'a') as file:
             file.write(data_to_save)
 
             print(data_to_save)
