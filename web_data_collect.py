@@ -2,8 +2,9 @@ import streamlit as st
 import requests
 import json
 import os
-#from configuration import airtable_token, base_id, table_id
+import csv
 
+from configuration import airtable_token, base_id, table_id
 
 env_airtable_token = os.getenv('AIRTABLE_TOKEN')
 env_base_id = os.getenv('BASE_ID')
@@ -52,18 +53,14 @@ if st.button("Zapisz"):
 
 if st.button("Pokaż wszystkie pytania"):
 
-    response=requests.get(url2,headers=headers)
-    data3= json.loads(response.text)
+    response = requests.get(url2, headers=headers)
+    data3 = json.loads(response.text)
+    processed_data = [record['fields'] for record in data3]
+    st.dataframe(processed_data)
     for record in data3['records']:
-       st.write(record['fields'])
-
-        # url3=url2+"/rec1"
-        # response2 = requests.get(url3, headers=headers, data=json.dumps(data))  # push to airtable
-        # if response.status_code == 200:
-        #    print("all",response2)
-        # else:
-        #     print("Airtable post error")
-
+        st.write(record['fields'])
+        st.write(record['id'])
+        print(record['fields'])
 
 
 def main():
