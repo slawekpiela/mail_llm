@@ -3,7 +3,9 @@ import requests
 from configuration import airtable_token, base_id, table_id
 
 url2 = f'https://api.airtable.com/v0/{base_id}/{table_id}'
+
 print(url2)
+
 headers = {
     'Authorization': 'Bearer ' + str(airtable_token),
     'Content-Type': 'application/json',
@@ -11,6 +13,7 @@ headers = {
 
 response = requests.get(url2, headers=headers)
 print("resp:", response)
+
 if response.status_code == 200:
     print("OK")
 else:
