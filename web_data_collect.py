@@ -5,9 +5,9 @@ import os
 #from configuration import airtable_token, base_id, table_id
 
 
-env_airtable_token = os.getenv('AIRTABLE_TOKEN', airtable_token)
-env_base_id = os.getenv('BASE_ID', base_id)
-env_table_id = os.getenv('TABLE_ID', table_id)
+env_airtable_token = os.getenv('AIRTABLE_TOKEN')
+env_base_id = os.getenv('BASE_ID')
+env_table_id = os.getenv('TABLE_ID')
 
 print(env_airtable_token)
 
