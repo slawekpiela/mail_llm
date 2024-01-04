@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import json
 import os
-from configuration import airtable_token, base_id, table_id
+#from configuration import airtable_token, base_id, table_id
 
 
 env_airtable_token = os.getenv('AIRTABLE_TOKEN', airtable_token)
