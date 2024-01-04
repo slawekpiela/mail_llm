@@ -55,7 +55,7 @@ if st.button("Pokaż wszystkie pytania"):
     response=requests.get(url2,headers=headers)
     data3= json.loads(response.text)
     for record in data3['records']:
-        print(record['fields'])
+       st.write(record['fields'])
 
         # url3=url2+"/rec1"
         # response2 = requests.get(url3, headers=headers, data=json.dumps(data))  # push to airtable
