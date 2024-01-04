@@ -1,17 +1,25 @@
 import streamlit as st
 import requests
 import json
+import os
 from configuration import airtable_token, base_id, table_id
 
+
+env_airtable_token = os.getenv('AIRTABLE_TOKEN', airtable_token)
+env_base_id = os.getenv('BASE_ID', base_id)
+env_table_id = os.getenv('TABLE_ID', table_id)
+
+print(env_airtable_token)
+
 # auth url and headers
-url2 = f"https://api.airtable.com/v0/{base_id}/{table_id}"
+url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
 headers = {
-    "Authorization": "Bearer " + str(airtable_token),
+    "Authorization": "Bearer " + str(env_airtable_token),
     "Content-Type": "application/json",
 }
 # clases of answers
 options_list = ["Inspekcje", "Incydenty", "Mobilne", "Osoby"]
-st.title("Zbieranie danych do KOIOS v.1.3")
+st.title("Zbieranie danych do KOIOS v.1.4")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 

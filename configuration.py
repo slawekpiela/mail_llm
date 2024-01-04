@@ -1,5 +1,4 @@
 from enum import Enum
-
 import tomli
 
 
@@ -29,6 +28,6 @@ assistant_id = _config["API"]["assistant_id"]
 sender_passwords = _config["Mail"]["sender_passwords"]
 user_mailin = _config["Mail"]["user_mailin"]
 engine = _config["Engines"]["GPT4"]
-airtable_token=_config["Airtable"]["airtable_token"]
+airtable_token = _config["Airtable"]["airtable_token"]
 base_id = _config["Airtable"]["base_id"]
 table_id = _config["Airtable"]["table_id"]
