@@ -2,14 +2,10 @@ import streamlit as st
 import requests
 from configuration import airtable_token, base_id, table_id
 
-air_t = airtable_token
-b_id = base_id
-t_id = table_id
-
-url2 = 'https://api.airtable.com/v0/{}/{}'.format(b_id, t_id)
+url2 = f'https://api.airtable.com/v0/{base_id}/{table_id}'
 print(url2)
 headers = {
-    'Authorization': 'Bearer ' + str(air_t),
+    'Authorization': 'Bearer ' + str(airtable_token),
     'Content-Type': 'application/json',
 }
 
@@ -26,7 +22,6 @@ st.title("Zbieranie danych do KOIOS v.1.2")
 if 'input1' not in st.session_state:
         st.session_state.input1=''
 
-
 # Create two text input boxes
 input1 = st.text_input("Pytanie:")
 input2 = st.text_input("Odpowiedź")
@@ -42,9 +37,6 @@ if st.button('Zapisz'):
             file.write(data_to_save)
 
             print(data_to_save)
-
-
-
     else:
         st.warning("Wypełnij wszytkie pola")
 if __name__ == "__main__":
