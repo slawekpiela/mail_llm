@@ -21,7 +21,7 @@ headers = {
 options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla KOIOS")
-st.subheader("ver.1.7")
+st.subheader("ver.1.8")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
@@ -76,7 +76,7 @@ if st.button("Zapisz"):
         st.warning("Wypełnij wszytkie pola")
 
 
-if st.button('Pobierz dane z Airtable w formacie CSV'):
+if st.button('Pobierz z wszytkimi pytaniami formacie CSV'):
     records = fetch_all_records(url2, headers)
     if records:
         csv_data = convert_to_csv(records)
