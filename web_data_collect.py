@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 import os
+import io
 import pandas as pd
 
 # from configuration import airtable_token, base_id, table_id
@@ -17,7 +18,7 @@ headers = {
     "Content-Type": "application/json",
 }
 # clases of answers
-options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Konfiguracja", "Raporty", "Systemowe"]
+options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla KOIOS")
 st.subheader("ver.1.7")
