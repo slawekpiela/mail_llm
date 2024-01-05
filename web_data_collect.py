@@ -24,7 +24,7 @@ st.subheader("ver.1.5")
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
 input1 = st.text_input("Pytanie:")
-input2 = st.text_input("Odpowiedź")
+input2 = st.text_area("Odpowiedź")
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
 
@@ -51,18 +51,16 @@ if st.button("Zapisz"):
     else:
         st.warning("Wypełnij wszytkie pola")
 
+
 if st.button("Pokaż wszystkie pytania"):
-
-    response = requests.get(url2, headers=headers)
-    data3 = json.loads(response.text)
-    processed_data = [record['fields'] for record in data3]
-    st.dataframe(processed_data)
-    for record in data3['records']:
-        st.write(record['fields'])
-        st.write(record['id'])
-        print(record['fields'])
-
-
+    get_response = requests.get(url2, headers=headers)
+    print(get_response)
+    if get_response.status_code == 200:
+        all_records = json.loads(get_response.text)['records']
+        for record in all_records:
+            st.write(record['fields'])
+    else:
+        st.error("Błąd przy pobieraniu danych")
 def main():
     exit()
 
