@@ -40,6 +40,21 @@ data = {
     }
 }
 
+def fetch_all_records(url, headers):
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return json.loads(response.text)['records']
+    else:
+        return None
+
+# Function to convert records to CSV
+def convert_to_csv(records):
+    df = pd.DataFrame([record['fields'] for record in records])
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False)
+    return csv_buffer.getvalue()
+
+
 # save collected inputrs to airbase
 if st.button("Zapisz"):
     if input1 and input2:
@@ -52,33 +67,18 @@ if st.button("Zapisz"):
         st.warning("Wypełnij wszytkie pola")
 
 
-if st.button("Pokaż wszystkie pytania"):
-    get_response = requests.get(url2, headers=headers)
-    if get_response.status_code == 200:
-        all_records = json.loads(get_response.text)['records']
-
-        # Creating a list to hold updated records
-        updated_records = []
-
-        # Iterate over each record and create input fields for editing
-        for record in all_records:
-            st.write("Record ID:", record['id'])
-            updated_record = {}
-            for field, value in record['fields'].items():
-                # Create a text input for each field
-                new_value = st.text_input(f"{field} for record {record['id']}", value)
-                updated_record[field] = new_value
-            updated_records.append(updated_record)
-
-        # Optional: Add a button to save changes
-        if st.button("Zapisz zmiany"):
-            # Code to update records in Airtable
-            # You'll need to write the logic to update the records
-            # using the Airtable API based on the updated_records list
-            pass
-
+if st.button('Pobierz dane z Airtable w formacie CSV'):
+    records = fetch_all_records(url2, headers)
+    if records:
+        csv_data = convert_to_csv(records)
+        st.download_button(
+            label="Pobierz CSV",
+            data=csv_data,
+            file_name='airtable_data.csv',
+            mime='text/csv',
+        )
     else:
-        st.error("Błąd przy pobieraniu danych")
+        st.error("Błąd przy pobieraniu danych z Airtable")
 def main():
     exit()
 
