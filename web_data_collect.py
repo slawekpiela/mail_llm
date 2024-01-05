@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 import os
+import pandas as pd
 
 # from configuration import airtable_token, base_id, table_id
 
@@ -49,10 +50,17 @@ def fetch_all_records(url, headers):
 
 # Function to convert records to CSV
 def convert_to_csv(records):
-    df = pd.DataFrame([record['fields'] for record in records])
+    # Ensure that all records have a 'fields' key and the value is a dictionary
+    valid_records = [record['fields'] for record in records if 'fields' in record and isinstance(record['fields'], dict)]
+
+    # Convert the valid records to a DataFrame
+    df = pd.DataFrame(valid_records)
+
+    # Convert DataFrame to CSV
     csv_buffer = io.StringIO()
     df.to_csv(csv_buffer, index=False)
     return csv_buffer.getvalue()
+
 
 
 # save collected inputrs to airbase
