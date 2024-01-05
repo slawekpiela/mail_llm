@@ -20,7 +20,7 @@ headers = {
 # clases of answers
 options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
-st.header("Zbieranie danych dla KOIOS")
+st.header("Zbieranie danych dla systemu KOIOS")
 st.subheader("ver.1.8")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
