@@ -2,15 +2,12 @@ import streamlit as st
 import requests
 import json
 import os
-import csv
 
-#from configuration import airtable_token, base_id, table_id
+# from configuration import airtable_token, base_id, table_id
 
 env_airtable_token = os.getenv('AIRTABLE_TOKEN')
 env_base_id = os.getenv('BASE_ID')
 env_table_id = os.getenv('TABLE_ID')
-
-print(env_airtable_token)
 
 # auth url and headers
 url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
@@ -20,7 +17,7 @@ headers = {
 }
 # clases of answers
 options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Konfiguracja", "Raporty", "Systemowe"]
-options_list2 = ["Adam","Asia", "Ewa", "Kira", "Maria","Sławek"]
+options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla KOIOS")
 st.subheader("ver.1.5")
 
