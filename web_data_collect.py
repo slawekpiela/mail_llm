@@ -4,7 +4,7 @@ import json
 import os
 import csv
 
-from configuration import airtable_token, base_id, table_id
+#from configuration import airtable_token, base_id, table_id
 
 env_airtable_token = os.getenv('AIRTABLE_TOKEN')
 env_base_id = os.getenv('BASE_ID')
