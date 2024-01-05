@@ -19,23 +19,26 @@ headers = {
     "Content-Type": "application/json",
 }
 # clases of answers
-options_list = ["Inspekcje", "Incydenty", "Mobilne", "Osoby"]
-st.title("Zbieranie danych do KOIOS v.1.4")
+options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Konfiguracja", "Raporty", "Systemowe"]
+options_list2 = ["Adam","Asia", "Ewa", "Kira", "Maria","Sławek"]
+st.header("Zbieranie danych dla KOIOS")
+st.subheader("ver.1.5")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
 input1 = st.text_input("Pytanie:")
 input2 = st.text_input("Odpowiedź")
-selected_option = st.selectbox("Choose an option", options_list)
+selected_option = st.selectbox("Wybierz sekcję", options_list)
+selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
 
-data_to_save = f"{input1},{input2},{selected_option},\n"
+data_to_save = f"{input1},{input2},{selected_option},{selected_option},\n"
 print(data_to_save)
 data = {
     "fields": {
         "Question": f"{input1}",
         "Answer": f"{input2}",
         "Section": f"{selected_option}",
-        "Person": "default",
+        "Person": f"{selected_option2}"
         # Add other fields here
     }
 }
