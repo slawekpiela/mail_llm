@@ -18,7 +18,7 @@ headers = {
     "Content-Type": "application/json",
 }
 # clases of answers
-options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby","powiadomienia", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
+options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby","Powiadomienia", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla systemu KOIOS")
 st.subheader("ver.1.8")
