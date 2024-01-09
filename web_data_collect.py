@@ -16,8 +16,9 @@ if 'input1' not in st.session_state:
     st.session_state['input1'] = ""
 if 'input2' not in st.session_state:
     st.session_state['input2'] = ""
-if 'show_success' not in st.session_state:
-    st.session_state['show_success'] = False
+if 'input_key' not in st.session_state:
+    st.session_state['input_key'] = 0  # Initial key for input widgets
+
 
 
 
@@ -36,8 +37,9 @@ st.subheader("ver.1.9")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
-input1 = st.text_input("Pytanie:", value=st.session_state['input1'])
-input2 = st.text_area("Odpowiedź", value=st.session_state['input2'])
+input1 = st.text_input("Pytanie:", value=st.session_state['input1'], key=f'input1_{st.session_state["input_key"]}')
+input2 = st.text_area("Odpowiedź", value=st.session_state['input2'], key=f'input2_{st.session_state["input_key"]}')
+
 
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
@@ -80,23 +82,19 @@ def convert_to_csv(records):
 
 # save collected inputrs to airbase
 if st.button("Zapisz"):
-    if input1.strip() and input2.strip():
+    if input1.strip() and input2.strip():  # Use strip to check for non-empty strings
         response = requests.post(url2, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
-            # Clear the session state variables and set success message to show
+            # Clear the session state variables
             st.session_state['input1'] = ''
             st.session_state['input2'] = ''
-            st.session_state['show_success'] = True
-            st.experimental_rerun()
+            # Increment the key to force refresh the input widgets
+            st.session_state['input_key'] += 1
+            st.success("Dane zapisane pomyślnie")
         else:
             st.error("Airtable post error: Status code " + str(response.status_code))
     else:
         st.warning("Wypełnij wszytkie pola")
-
-# Display success message and reset its state
-if st.session_state['show_success']:
-    st.success("Dane zapisane pomyślnie")
-    st.session_state['show_success'] = False
 
 if st.button('Pobierz z wszytkimi pytaniami formacie CSV'):
     records = fetch_all_records(url2, headers)
