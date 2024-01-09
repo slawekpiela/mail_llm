@@ -91,6 +91,7 @@ if st.button("Zapisz"):
             # Increment the key to force refresh the input widgets
             st.session_state['input_key'] += 1
             st.success("Dane zapisane pomyślnie")
+            st.rerun()
         else:
             st.error("Airtable post error: Status code " + str(response.status_code))
     else:
