@@ -28,7 +28,7 @@ options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Powiadomienia",
                 "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla systemu KOIOS")
-st.subheader("ver.1.7")
+st.subheader("ver.1.9")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
@@ -83,7 +83,7 @@ if st.button("Zapisz"):
             st.session_state['input1'] = ''
             st.session_state['input2'] = ''
             st.success("Dane zapisane pomyślnie")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Airtable post error")
     else:
