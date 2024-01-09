@@ -28,7 +28,7 @@ headers = {
 options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby","Powiadomienia", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla systemu KOIOS")
-st.subheader("ver.1.9")
+st.subheader("ver.1.7")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
@@ -75,6 +75,8 @@ def convert_to_csv(records):
 # save collected inputrs to airbase
 if st.button("Zapisz"):
     if input1 and input2:
+        st.session_state['input1'] = ""
+        st.session_state['input2'] = ""
         response = requests.post(url2, headers=headers, data=json.dumps(data))  # push to airtable
         if response.status_code == 200:
             # Clear the inputs after successful submission
