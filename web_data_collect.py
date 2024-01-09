@@ -80,8 +80,8 @@ if st.button("Zapisz"):
         response = requests.post(url2, headers=headers, data=json.dumps(data))  # push to airtable
         if response.status_code == 200:
             # Clear the inputs after successful submission
-            st.session_state['input1'] = "test"
-            st.session_state['input2'] = "test"
+            st.session_state['input1'] = ''
+            st.session_state['input2'] = ''
             st.success("Dane zapisane pomyślnie")
             st.experimental_rerun()
         else:
