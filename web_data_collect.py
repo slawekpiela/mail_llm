@@ -76,15 +76,15 @@ def convert_to_csv(records):
 # save collected inputrs to airbase
 if st.button("Zapisz"):
     if input1 and input2:
-        response = requests.post(url2, headers=headers, data=json.dumps(data))  # push to airtable
+        response = requests.post(url2, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
+            # Clear the session state variables
+            st.session_state['input1'] = ""
+            st.session_state['input2'] = ""
             st.success("Dane zapisane pomyślnie")
-            # Clear the inputs after successful submission
-            st.session_state['input1'] = 'puste'
-            st.session_state['input2'] = 'puste'
-            st.rerun()
+            st.experimental_rerun()
         else:
-            st.error("Airtable post error")
+            st.error("Airtable post error: Status code " + str(response.status_code))
     else:
         st.warning("Wypełnij wszytkie pola")
 
