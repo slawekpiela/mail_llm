@@ -36,8 +36,8 @@ st.subheader("ver.1.9")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
-input1 = st.text_input("Pytanie:", value=st.session_state['input1'], key=f'input1_{st.session_state["input_key"]}')
-input2 = st.text_area("Odpowiedź", value=st.session_state['input2'], key=f'input2_{st.session_state["input_key"]}')
+input1 = st.text_input("Pytanie:", value=st.session_state['input1'])
+input2 = st.text_area("Odpowiedź", value=st.session_state['input2'])
 
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
