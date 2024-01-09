@@ -57,7 +57,7 @@ def fetch_all_records(url, headers):
     else:
         return None
 
-# Function to convert records to CSV
+# Function to convert records to CSV.
 def convert_to_csv(records):
     # Ensure that all records have a 'fields' key and the value is a dictionary
     valid_records = [record['fields'] for record in records if 'fields' in record and isinstance(record['fields'], dict)]
