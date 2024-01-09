@@ -16,6 +16,9 @@ if 'input1' not in st.session_state:
     st.session_state['input1'] = ""
 if 'input2' not in st.session_state:
     st.session_state['input2'] = ""
+if 'input_key' not in st.session_state:
+    st.session_state['input_key'] = 0  # Initial key for input widgets
+
 
 # auth url and headers
 url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
@@ -32,8 +35,9 @@ st.subheader("ver.1.9")
 
 response = requests.get(url2, headers=headers)  # authenticate in airtable
 
-input1 = st.text_input("Pytanie:", value=st.session_state['input1'])
-input2 = st.text_area("Odpowiedź", value=st.session_state['input2'])
+input1 = st.text_input("Pytanie:", value=st.session_state['input1'], key=f'input1_{st.session_state["input_key"]}')
+input2 = st.text_area("Odpowiedź", value=st.session_state['input2'], key=f'input2_{st.session_state["input_key"]}')
+
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
 
@@ -75,18 +79,15 @@ def convert_to_csv(records):
 
 # save collected inputrs to airbase
 if st.button("Zapisz"):
-    # Trim the inputs
-    trimmed_input1 = input1.strip()
-    trimmed_input2 = input2.strip()
-
-    if trimmed_input1 and trimmed_input2:
+    if input1.strip() and input2.strip():  # Use strip to check for non-empty strings
         response = requests.post(url2, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
-            # Clear the session state variables by setting them to empty strings
+            # Clear the session state variables
             st.session_state['input1'] = ''
             st.session_state['input2'] = ''
+            # Increment the key to force refresh the input widgets
+            st.session_state['input_key'] += 1
             st.success("Dane zapisane pomyślnie")
-            st.experimental_rerun()
         else:
             st.error("Airtable post error: Status code " + str(response.status_code))
     else:
