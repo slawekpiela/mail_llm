@@ -80,7 +80,7 @@ def convert_to_csv(records):
     return csv_buffer.getvalue()
 
 
-# save collected inputrs to airbase
+# save collected inputrs to airbase.
 if st.button("Zapisz"):
     if input1.strip() and input2.strip():  # Use strip to check for non-empty strings
         response = requests.post(url2, headers=headers, data=json.dumps(data))
