@@ -17,7 +17,6 @@ if 'input1' not in st.session_state:
 if 'input2' not in st.session_state:
     st.session_state['input2'] = ""
 
-
 # auth url and headers
 url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
 headers = {
@@ -25,7 +24,8 @@ headers = {
     "Content-Type": "application/json",
 }
 # clases of answers
-options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby","Powiadomienia", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
+options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Powiadomienia", "Raporty", "Konfiguracja", "Raporty",
+                "Systemowe", "Handlowe", "Funkcjonalne"]
 options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
 st.header("Zbieranie danych dla systemu KOIOS")
 st.subheader("ver.1.7")
@@ -36,7 +36,6 @@ input1 = st.text_input("Pytanie:", value=st.session_state['input1'])
 input2 = st.text_area("Odpowiedź", value=st.session_state['input2'])
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
-
 
 data_to_save = f"{input1},{input2},{selected_option},{selected_option},\n"
 print(data_to_save)
@@ -50,6 +49,7 @@ data = {
     }
 }
 
+
 def fetch_all_records(url, headers):
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
@@ -57,10 +57,12 @@ def fetch_all_records(url, headers):
     else:
         return None
 
+
 # Function to convert records to CSV.
 def convert_to_csv(records):
     # Ensure that all records have a 'fields' key and the value is a dictionary
-    valid_records = [record['fields'] for record in records if 'fields' in record and isinstance(record['fields'], dict)]
+    valid_records = [record['fields'] for record in records if
+                     'fields' in record and isinstance(record['fields'], dict)]
 
     # Convert the valid records to a DataFrame
     df = pd.DataFrame(valid_records)
@@ -71,23 +73,21 @@ def convert_to_csv(records):
     return csv_buffer.getvalue()
 
 
-
 # save collected inputrs to airbase
 if st.button("Zapisz"):
     if input1 and input2:
-        st.session_state['input1'] = ""
-        st.session_state['input2'] = ""
+
         response = requests.post(url2, headers=headers, data=json.dumps(data))  # push to airtable
         if response.status_code == 200:
             # Clear the inputs after successful submission
             st.session_state['input1'] = ""
             st.session_state['input2'] = ""
             st.success("Dane zapisane pomyślnie")
+            st.experimental_rerun()
         else:
             st.error("Airtable post error")
     else:
         st.warning("Wypełnij wszytkie pola")
-
 
 if st.button('Pobierz z wszytkimi pytaniami formacie CSV'):
     records = fetch_all_records(url2, headers)
@@ -101,6 +101,8 @@ if st.button('Pobierz z wszytkimi pytaniami formacie CSV'):
         )
     else:
         st.error("Błąd przy pobieraniu danych z Airtable")
+
+
 def main():
     exit()
 
