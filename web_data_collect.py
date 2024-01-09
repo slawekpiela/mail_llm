@@ -2,16 +2,28 @@ import streamlit as st
 import requests
 import json
 import os
-import io
-import pandas as pd
 
-# from configuration import airtable_token, base_id, table_id
-
+# Initialize environment variables
 env_airtable_token = os.getenv('AIRTABLE_TOKEN')
 env_base_id = os.getenv('BASE_ID')
 env_table_id = os.getenv('TABLE_ID')
 
-# Initialize session state variables for input1 and input2
+# URL and headers for Airtable API
+url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
+headers = {
+    "Authorization": "Bearer " + str(env_airtable_token),
+    "Content-Type": "application/json",
+}
+
+# Options for selectboxes
+options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Powiadomienia", "Raporty", "Konfiguracja", "Raporty", "Systemowe", "Handlowe", "Funkcjonalne"]
+options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
+
+# Streamlit UI layout
+st.header("Zbieranie danych dla systemu KOIOS")
+st.subheader("ver.1.9")
+
+# Initialize session state for input fields and success message flag
 if 'input1' not in st.session_state:
     st.session_state['input1'] = ""
 if 'input2' not in st.session_state:
@@ -19,81 +31,37 @@ if 'input2' not in st.session_state:
 if 'show_success' not in st.session_state:
     st.session_state['show_success'] = False
 
-
-
-# auth url and headers
-url2 = f"https://api.airtable.com/v0/{env_base_id}/{env_table_id}"
-headers = {
-    "Authorization": "Bearer " + str(env_airtable_token),
-    "Content-Type": "application/json",
-}
-# clases of answers
-options_list = ["Inspekcje", "Incydenty", "Aplikacja", "Osoby", "Powiadomienia", "Raporty", "Konfiguracja", "Raporty",
-                "Systemowe", "Handlowe", "Funkcjonalne"]
-options_list2 = ["Adam", "Asia", "Ewa", "Kira", "Maria", "Sławek"]
-st.header("Zbieranie danych dla systemu KOIOS")
-st.subheader("ver.1.9")
-
-response = requests.get(url2, headers=headers)  # authenticate in airtable
-
-input1 = st.text_input("Pytanie:", value=st.session_state['input1'])
-input2 = st.text_area("Odpowiedź", value=st.session_state['input2'])
-
+# Input fields
+input1 = st.text_input("Pytanie:", value=st.session_state['input1'], key='input1')
+input2 = st.text_area("Odpowiedź", value=st.session_state['input2'], key='input2')
 selected_option = st.selectbox("Wybierz sekcję", options_list)
 selected_option2 = st.selectbox("Osoba uzupełniająca dane", options_list2)
 
-data_to_save = f"{input1},{input2},{selected_option},{selected_option},\n"
-print(data_to_save)
+# Prepare data to send to Airtable
 data = {
     "fields": {
-        "Question": f"{input1}",
-        "Answer": f"{input2}",
-        "Section": f"{selected_option}",
-        "Person": f"{selected_option2}"
-        # Add other fields here.
+        "Question": input1,
+        "Answer": input2,
+        "Section": selected_option,
+        "Person": selected_option2
     }
 }
 
-
-def fetch_all_records(url, headers):
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return json.loads(response.text)['records']
-    else:
-        return None
-
-
-# Function to convert records to CSV.
-def convert_to_csv(records):
-    # Ensure that all records have a 'fields' key and the value is a dictionary
-    valid_records = [record['fields'] for record in records if
-                     'fields' in record and isinstance(record['fields'], dict)]
-
-    # Convert the valid records to a DataFrame
-    df = pd.DataFrame(valid_records)
-
-    # Convert DataFrame to CSV
-    csv_buffer = io.StringIO()
-    df.to_csv(csv_buffer, index=False)
-    return csv_buffer.getvalue()
-
-
-# save collected inputrs to airbase
+# Button to save data
 if st.button("Zapisz"):
     if input1.strip() and input2.strip():
         response = requests.post(url2, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
-            # Clear the session state variables and set success message to show
+            st.session_state['show_success'] = True
             st.session_state['input1'] = ''
             st.session_state['input2'] = ''
-            st.session_state['show_success'] = True
             st.experimental_rerun()
         else:
             st.error("Airtable post error: Status code " + str(response.status_code))
     else:
         st.warning("Wypełnij wszytkie pola")
 
-# Display success message and reset its state
+# Display success message
 if st.session_state['show_success']:
     st.success("Dane zapisane pomyślnie")
     st.session_state['show_success'] = False
